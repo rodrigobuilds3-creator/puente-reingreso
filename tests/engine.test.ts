@@ -34,3 +34,9 @@ test('sanitizes negative and non-finite values', () => {
   assert.equal(result.availableMargin, -1200);
   assert.equal(result.formal.candyKept, 0);
 });
+
+test('never preserves more candy-selling hours than the user actually works', () => {
+  const result = calculateRouteModel({ ...base, candyHours: 8 }, 14).formal;
+  assert.equal(result.retainedHours, 8);
+  assert.equal(result.opportunity, 0);
+});

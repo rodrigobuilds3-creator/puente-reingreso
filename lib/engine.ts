@@ -24,8 +24,9 @@ export function calculateRouteModel(inputs: CashInputs, period: 7 | 14) {
   const hourly = sanitized.candyHours > 0 ? sanitized.candyNet / sanitized.candyHours : 0;
 
   const makeRoute = (retainedHours: number, transition: number, outsideIncome: number): RouteResult => {
-    const candyKept = hourly * retainedHours * weeks;
-    const opportunity = hourly * Math.max(sanitized.candyHours - retainedHours, 0) * weeks;
+    const safeRetainedHours = Math.min(retainedHours, sanitized.candyHours);
+    const candyKept = hourly * safeRetainedHours * weeks;
+    const opportunity = hourly * (sanitized.candyHours - safeRetainedHours) * weeks;
     const bridge = sanitized.cash + candyKept - transition - floor;
     return {
       candyKept,
@@ -33,7 +34,7 @@ export function calculateRouteModel(inputs: CashInputs, period: 7 | 14) {
       bridge,
       closing: bridge + (period === 14 ? outsideIncome : 0),
       transition,
-      retainedHours,
+      retainedHours: safeRetainedHours,
     };
   };
 

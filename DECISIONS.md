@@ -22,6 +22,7 @@
 - Adopted `PUENTE` as the user-facing name with `by TRAJECTORY` as a quiet endorsement.
 - Adopted an original two-span bridge/route mark implemented with CSS geometry rather than copied artwork.
 - Built the first responsive slice with editable cash inputs, 7/14-day calculations, equal-weight routes, explicit opportunity cost, a protected 12-hour candy-sales bridge, and a 24-hour fallback.
+- Completed deploy 1, then used the mechanical pass to find and fix an overstatement bug when reported candy-selling hours were below the route's retained-hours assumption.
 - Documented all team-locked decisions, adjustable slice decisions, hypotheses, and security constraints in `docs/DESIGN_OPTIONS_AND_CRITICAL_DECISIONS.md`.
 
 ## Tomorrow's first move
