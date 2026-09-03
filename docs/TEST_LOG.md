@@ -22,3 +22,17 @@ The engine now caps retained hours at the user's reported weekly hours before ca
 ### Result
 
 Seven engine tests pass after the fix. The corrected build is the second deployment candidate.
+
+## Pass 2 - September 3, 2026
+
+### Persona-test regression added
+
+The synthetic persona test exposed a separate safety contradiction: Route 1 could remain `VERIFIED` while its bridge before the first paycheck was negative. The engine now keeps evidence status separate from cash safety. Any route with `bridge < 0` becomes `NO DISPONIBLE`, cannot be selected, and does not generate next steps.
+
+### Final automated result
+
+Eight engine tests pass, including the new regression test `keeps evidence status separate from cash safety`.
+
+### Tooling note
+
+The deployed version had already passed `npm run build` and `npm run lint`. A documentation-only final rerun on September 3 encountered a local dependency-runtime mismatch in the existing `node_modules`: ESLint reported `shouldUseFlatConfig is not a function`, while a concurrent Vinext build stalled without reporting an application error. No product source changed after the last successful deployment; the deterministic test suite still completed with 8/8 passing.

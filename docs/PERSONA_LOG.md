@@ -39,7 +39,7 @@ You are Luis, 20, from Ecatepec. You left high school to help at home, sell pack
 
 ## Before evidence
 
-![Before: PUENTE landing screen on a 360 px viewport](persona/01-before-hero-mobile.png)
+![Before: PUENTE had already chosen the formal-route next steps before the user decided](persona/01-before-hero-mobile.png)
 
 ![Before: persona base shows a MXN 600 gap](persona/02-before-base-persona.png)
 
@@ -56,6 +56,8 @@ The critical contradiction between `VERIFIED` and a negative cash bridge was sel
 - No route is selected on first load.
 - The next-step area instructs the user to protect the base until they actively choose a safe route.
 - The same synthetic values leave Route 1 unavailable and Route 2 provisional/available.
+
+<!-- pagebreak -->
 
 ## After evidence
 

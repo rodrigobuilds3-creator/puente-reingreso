@@ -5,6 +5,9 @@
 **Declared slice:** Puente's 7/14-day cash-protection logic, route cards, evidence states, and protected fallback for one exact re-entry user.  
 **Blueprint condition owned:** Condition 4 - every route protects immediate stability by accounting for income timing, transport, equipment, schedule, first-payment dates, and an emergency reserve.
 
+**Working prototype:** https://puente-reingreso-rodrigo.j6x567qt8g.chatgpt.site
+**Build evidence:** eight deterministic engine tests pass; three Sites versions were published; the critical persona-test safety contradiction was corrected and retested.
+
 ## 1. Problem in my words
 
 A person who earns money informally cannot judge a formal job only by its monthly salary. Moving into formal work can temporarily remove today's cash while adding transport, meals, documents, equipment, unpaid onboarding, and a wait until the first paycheck. Existing career tools usually recommend occupations or courses but do not answer the urgent question: **Can I take this route without leaving my household short of cash before it pays?**
