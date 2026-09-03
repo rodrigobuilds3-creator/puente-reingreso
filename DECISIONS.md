@@ -23,6 +23,8 @@
 - Adopted an original two-span bridge/route mark implemented with CSS geometry rather than copied artwork.
 - Built the first responsive slice with editable cash inputs, 7/14-day calculations, equal-weight routes, explicit opportunity cost, a protected 12-hour candy-sales bridge, and a 24-hour fallback.
 - Completed deploy 1, then used the mechanical pass to find and fix an overstatement bug when reported candy-selling hours were below the route's retained-hours assumption.
+- Completed the 360 px synthetic-persona pass with Luis using MXN 1,800 available, MXN 1,500 weekly candy income, 42 selling hours, and a MXN 9,500 formal salary anchor.
+- Fixed the persona pass's critical contradiction: a route with a negative pre-paycheck bridge can no longer remain verified or selected. It is now `NO DISPONIBLE`, its action is disabled, and no route is preselected.
 - Documented all team-locked decisions, adjustable slice decisions, hypotheses, and security constraints in `docs/DESIGN_OPTIONS_AND_CRITICAL_DECISIONS.md`.
 
 ## Tomorrow's first move

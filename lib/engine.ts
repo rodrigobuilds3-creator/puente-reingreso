@@ -13,6 +13,7 @@ export type RouteResult = {
   closing: number;
   transition: number;
   retainedHours: number;
+  safetyStatus: 'available' | 'unavailable';
 };
 
 export function calculateRouteModel(inputs: CashInputs, period: 7 | 14) {
@@ -35,6 +36,7 @@ export function calculateRouteModel(inputs: CashInputs, period: 7 | 14) {
       closing: bridge + (period === 14 ? outsideIncome : 0),
       transition,
       retainedHours: safeRetainedHours,
+      safetyStatus: bridge >= 0 ? 'available' : 'unavailable',
     };
   };
 

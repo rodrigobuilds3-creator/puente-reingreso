@@ -27,6 +27,7 @@ test('exposes opportunity cost without deducting it twice', () => {
 test('shows a negative bridge when upfront cash is insufficient', () => {
   const result = calculateRouteModel({ ...base, cash: 500 }, 14).formal;
   assert.ok(result.bridge < 0);
+  assert.equal(result.safetyStatus, 'unavailable');
 });
 
 test('sanitizes negative and non-finite values', () => {
@@ -39,4 +40,11 @@ test('never preserves more candy-selling hours than the user actually works', ()
   const result = calculateRouteModel({ ...base, candyHours: 8 }, 14).formal;
   assert.equal(result.retainedHours, 8);
   assert.equal(result.opportunity, 0);
+});
+
+test('keeps evidence status separate from cash safety', () => {
+  const result = calculateRouteModel({ ...base, cash: 1800, candyNet: 1500, candyHours: 42 }, 14);
+  assert.ok(Math.abs(result.formal.bridge - -892.8571428571429) < 0.001);
+  assert.equal(result.formal.safetyStatus, 'unavailable');
+  assert.equal(result.prepa.safetyStatus, 'available');
 });

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { calculateRouteModel } from '../lib/engine';
 
 type RouteId = 'formal' | 'prepa';
+type RouteStatus = 'VERIFICADO' | 'PROVISIONAL' | 'NO DISPONIBLE';
 type Inputs = {
   cash: number;
   weeklyFloor: number;
@@ -41,10 +42,16 @@ const steps = {
   ],
 };
 
+const safeSteps = [
+  ['HOY · 5 MIN', 'Separar tu base', 'Aparta primero el dinero de casa para los próximos 14 días.'],
+  ['MAÑANA', 'Verificar una ruta', 'Confirma horario, primer pago y costos sin pagar gestores.'],
+  ['DESPUÉS', 'Elegir sin presión', 'Explora una ruta sólo cuando el puente ya no sea negativo.'],
+];
+
 export default function Home() {
   const [period, setPeriod] = useState<7 | 14>(14);
   const [inputs, setInputs] = useState(initialInputs);
-  const [selected, setSelected] = useState<RouteId>('formal');
+  const [selected, setSelected] = useState<RouteId | null>(null);
 
   const calculation = useMemo(() => calculateRouteModel(inputs, period), [inputs, period]);
 
@@ -56,7 +63,7 @@ export default function Home() {
   const reset = () => {
     setInputs(initialInputs);
     setPeriod(14);
-    setSelected('formal');
+    setSelected(null);
   };
 
   const goTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -130,17 +137,17 @@ export default function Home() {
         <div className="section-number">02</div>
         <div className="section-intro"><p className="eyebrow">DOS CAMINOS · MISMA META</p><h2 id="routes-title">Compara con la cuenta clara.</h2><p>Ambas rutas se presentan con el mismo peso visual. El estado habla de la evidencia, no de tu capacidad.</p></div>
         <div className="route-cards">
-          <RouteCard id="formal" selected={selected === 'formal'} status="VERIFICADO" title="Empleo formal ahora" subtitle="Vacante y pago confirmados" data={calculation.formal} onSelect={setSelected} />
-          <RouteCard id="prepa" selected={selected === 'prepa'} status="PROVISIONAL" title="Prepa + empleo parcial" subtitle="Falta confirmar horario escolar" data={calculation.prepa} onSelect={setSelected} />
+          <RouteCard id="formal" selected={selected === 'formal'} status={calculation.formal.safetyStatus === 'unavailable' ? 'NO DISPONIBLE' : 'VERIFICADO'} title="Empleo formal ahora" subtitle="Vacante y pago confirmados" data={calculation.formal} onSelect={setSelected} />
+          <RouteCard id="prepa" selected={selected === 'prepa'} status={calculation.prepa.safetyStatus === 'unavailable' ? 'NO DISPONIBLE' : 'PROVISIONAL'} title="Prepa + empleo parcial" subtitle="Falta confirmar horario escolar" data={calculation.prepa} onSelect={setSelected} />
         </div>
         <div className="decision-note"><b>¿Por qué no quitamos las 12 horas de dulces?</b><p>Porque el primer pago formal llega hasta la quincena. Esas horas conservan ingreso inmediato y reducen el riesgo de romper tu piso antes del depósito.</p></div>
       </section>
 
       <section className="next-step" id="paso" aria-labelledby="next-title">
         <div className="section-number">03</div>
-        <div className="next-copy"><p className="eyebrow">UN PASO A LA VEZ</p><h2 id="next-title">La ruta sigue bajo tu control.</h2><p>Elegiste explorar: <strong>{selected === 'formal' ? 'Empleo formal ahora' : 'Prepa + empleo parcial'}</strong>. Puedes cambiarla sin penalización.</p></div>
+        <div className="next-copy"><p className="eyebrow">UN PASO A LA VEZ</p><h2 id="next-title">La ruta sigue bajo tu control.</h2><p>{selected ? <>Elegiste explorar: <strong>{selected === 'formal' ? 'Empleo formal ahora' : 'Prepa + empleo parcial'}</strong>. Puedes cambiarla sin penalización.</> : <>Todavía no has elegido una ruta. <strong>Primero protege tu base</strong> y después explora la que encaje contigo.</>}</p></div>
         <ol className="timeline">
-          {steps[selected].map(([time, title, copy], index) => <li className={index === 0 ? 'current' : ''} key={title}><span>{index + 1}</span><article><small>{time}</small><h3>{title}</h3><p>{copy}</p></article></li>)}
+          {(selected ? steps[selected] : safeSteps).map(([time, title, copy], index) => <li className={index === 0 ? 'current' : ''} key={title}><span>{index + 1}</span><article><small>{time}</small><h3>{title}</h3><p>{copy}</p></article></li>)}
         </ol>
         <aside className="fallback"><div><span>PLAN B · EN MENOS DE 24 H</span><h3>Volver a venta de dulces por 7 días</h3><p>Si cambia el horario, el pago o la vacante, recuperas tu fuente inmediata sin quedar atrapado.</p></div><b>↘</b></aside>
         <div className="ai-note"><strong>✦ IA SIMULADA</strong><span>Resume información; no decide, no califica y puede equivocarse. Verifica los datos marcados.</span></div>
@@ -154,15 +161,15 @@ export default function Home() {
 function RouteCard({ id, selected, status, title, subtitle, data, onSelect }: {
   id: RouteId;
   selected: boolean;
-  status: 'VERIFICADO' | 'PROVISIONAL';
+  status: RouteStatus;
   title: string;
   subtitle: string;
-  data: { candyKept: number; opportunity: number; bridge: number; closing: number; transition: number; retainedHours: number };
+  data: { candyKept: number; opportunity: number; bridge: number; closing: number; transition: number; retainedHours: number; safetyStatus: 'available' | 'unavailable' };
   onSelect: (id: RouteId) => void;
 }) {
   return (
-    <article className={`route-card ${status === 'VERIFICADO' ? 'verified' : 'provisional'} ${selected ? 'selected' : ''}`}>
-      <header><span>{id === 'formal' ? 'RUTA 01' : 'RUTA 02'}</span><b>{status === 'VERIFICADO' ? '●' : '○'} {status}</b></header>
+    <article className={`route-card ${status === 'VERIFICADO' ? 'verified' : status === 'PROVISIONAL' ? 'provisional' : 'unavailable'} ${selected ? 'selected' : ''}`}>
+      <header><span>{id === 'formal' ? 'RUTA 01' : 'RUTA 02'}</span><b>{status === 'VERIFICADO' ? '●' : status === 'PROVISIONAL' ? '○' : '×'} {status}</b></header>
       <div className="route-title"><h3>{title}</h3><p>{subtitle}</p></div>
       <dl>
         <div><dt>Venta de dulces conservada</dt><dd>{data.retainedHours} h/sem</dd></div>
@@ -172,7 +179,7 @@ function RouteCard({ id, selected, status, title, subtitle, data, onSelect }: {
         <div><dt>Puente antes del primer pago</dt><dd className={data.bridge >= 0 ? 'positive' : 'negative'}>{pesos.format(data.bridge)}</dd></div>
       </dl>
       <footer><span>EFECTIVO AL CIERRE</span><strong>{pesos.format(data.closing)}</strong></footer>
-      <button className="select-route" aria-pressed={selected} type="button" onClick={() => onSelect(id)}>{selected ? 'RUTA ELEGIDA ✓' : 'EXPLORAR ESTA RUTA →'}</button>
+      <button className="select-route" aria-pressed={selected} disabled={data.safetyStatus === 'unavailable'} type="button" onClick={() => onSelect(id)}>{data.safetyStatus === 'unavailable' ? 'PROTEGE TU BASE PRIMERO' : selected ? 'RUTA ELEGIDA ✓' : 'EXPLORAR ESTA RUTA →'}</button>
     </article>
   );
 }
