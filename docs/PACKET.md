@@ -6,7 +6,7 @@
 **Blueprint condition owned:** Condition 4 - every route protects immediate stability by accounting for income timing, transport, equipment, schedule, first-payment dates, and an emergency reserve.
 
 **Working prototype:** https://puente-reingreso-rodrigo.j6x567qt8g.chatgpt.site
-**Build evidence:** eight deterministic engine tests pass; three Sites versions were published; the critical persona-test safety contradiction was corrected and retested.
+**Build evidence:** thirteen deterministic engine tests pass; three Sites versions were published before the final compliance rebuild; the mechanical, persona, and specification-audit fixes are documented and retested.
 
 ## 1. Problem in my words
 
@@ -116,6 +116,8 @@ In three years, Puente could become a small, accountable network connecting stat
 - No production LLM call. The AI summary and draft are deterministic simulations labeled **SIMULATED AI OUTPUT** on screen.
 - No claim that the formal job, credential, or institutional handoff is available until its required evidence is confirmed.
 
+**LLM boundary:** the Week 2 feedback about requiring a real LLM does not silently carry into this product as an unsupported claim. Team 6's Week 4 Blueprint says AI *may* support intake, summaries, explanations, and drafts, while deterministic rules and authorized humans must control verification and cash safety. This slice therefore ships a clearly labeled deterministic simulation and makes no claim of satisfying a real-LLM requirement. If the Brightspace rubric separately requires a real LLM, the build must stop and add a constrained server-side rewrite endpoint before submission.
+
 ## 10. Product requirements
 
 ### P0 - must ship
@@ -176,6 +178,8 @@ In three years, Puente could become a small, accountable network connecting stat
 - **Validation:** all fields have type, range, date, and length validation; outputs use text rendering rather than raw HTML.
 - **External messages:** the user previews and copies a draft; Puente never sends it.
 
+<!-- pagebreak -->
+
 ## 14. Test plan - two documented passes
 
 ### Mechanical pass
@@ -204,6 +208,8 @@ Stop or revise if the engine produces a preventable cash-floor breach, hides a m
 
 Build a small mobile-first Vite + TypeScript web app named Puente from this packet. Implement the cash-protection engine as pure functions first, then the seven-day log, two equal-weight route cards, evidence statuses, simulated-AI summary, and protected fallback. Use only invented fixtures and no persistence or network calls. Each result must expose its math and missing evidence. Add automated tests for the three route states and invalid inputs, then document one bug-fix-redeploy cycle. Do not add a marketplace, scoring, authentication, a database, real LLM API, or personal-data fields.
 
+<!-- pagebreak -->
+
 ## 17. Commit and deployment plan
 
 1. `docs: add Week 4 packet and generated mockup`
@@ -221,3 +227,17 @@ Deploy 1 follows the first working route-card flow. Deploy 2 follows the documen
 - **Non-blocking - data/partner:** which State of Mexico employment office and small partner set would maintain live route terms in a real pilot?
 - **Non-blocking - operations:** can employer schedule and first-payment evidence be confirmed within the 30-minute advisor cap?
 - **Blocking before real pilot - legal/security:** what consent, retention, accessibility, and public-sector procurement requirements apply once real participant data or institutional handoffs are introduced?
+
+## 19. Final implementation audit - September 4, 2026
+
+The first deployed interface did not fully match this Packet. It used weekly aggregate candy income, omitted the lowest-day reserve, collapsed transition costs into one number, and did not show complete route evidence metadata. The final compliance rebuild corrects those gaps:
+
+- Seven editable daily records now capture sales, restocking, transport, other costs, and hours; fewer than five valid days blocks both routes.
+- Daily net, weekly net, weekly hours, and the lowest positive net-day reserve are calculated visibly.
+- Safety now protects the period floor plus that reserve.
+- Transition costs expose transport, phone/data, documents, equipment or uniform, meals, bank/onboarding/unpaid training, and lost candy income as opportunity cost.
+- Each route displays its simulated source, evidence date, requirements, schedule, first-payment/support treatment, missing evidence, and responsible party.
+- The provisional education route counts MXN 0 of unconfirmed future income.
+- The user can select, switch, reject all routes, reset after confirmation, and export a local JSON summary.
+- Every generated explanation and draft appears inside one `SIMULATED AI OUTPUT` block and cannot change route status.
+- Thirteen automated tests, a successful production build, lint, and a 360 px interaction pass validate the final source.

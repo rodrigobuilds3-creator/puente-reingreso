@@ -70,3 +70,27 @@ The critical contradiction between `VERIFIED` and a negative cash bridge was sel
 With the same values, Route 1 now displays `NO DISPONIBLE`, its action is disabled, and no route is chosen automatically. Route 2 remains `PROVISIONAL` because its school schedule is unconfirmed, but its positive MXN 36 bridge allows the persona to explore it. Selecting Route 2 updates the next-step sequence to validate the school schedule, confirm that the option is free, preserve 18 selling hours, and review the route on day 14.
 
 The critical acceptance criteria pass. The remaining medium-priority wording test for `PROVISIONAL` is recorded for a future iteration rather than expanded into this Week 4 slice.
+
+## Final compliance retest - September 4, 2026
+
+The specification audit found that the earlier persona test still omitted the Blueprint's emergency reserve because the product accepted only weekly aggregate income. The final retest uses the same Luis profile with a complete seven-day record:
+
+| Input | Final synthetic value |
+|---|---:|
+| Cash available today | MXN 1,800 |
+| Household floor | MXN 1,200/week |
+| Seven-day candy net | MXN 1,500 |
+| Selling time | 42 hours/week |
+| Lowest positive net day | MXN 180 |
+| Protected 14-day amount | MXN 2,580 |
+| Formal salary scenario | MXN 9,500/month |
+
+The formal route retains 12 selling hours but ends MXN 1,073 below the floor plus reserve before payday. The education route retains 18 hours and counts no unconfirmed support, but it remains MXN 144 below the protected amount. Both routes correctly become `NO DISPONIBLE`; neither can be selected. The fallback tells Luis to separate the floor and reserve, verify one route for free, and preserve seven days of candy sales. This is safer than forcing the previous MXN 36 provisional route to appear feasible without a reserve.
+
+![Final retest: the persona's base includes the missing reserve](persona/06-final-reserve-persona.png)
+
+![Final retest: the formal route is unavailable](persona/09-final-route-margins-persona.png)
+
+![Final retest: the education route also protects the reserve](persona/10-final-route2-margin-persona.png)
+
+![Final retest: the fallback starts with floor and reserve](persona/08-final-fallback-persona.png)

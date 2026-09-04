@@ -27,6 +27,15 @@
 - Fixed the persona pass's critical contradiction: a route with a negative pre-paycheck bridge can no longer remain verified or selected. It is now `NO DISPONIBLE`, its action is disabled, and no route is preselected.
 - Documented all team-locked decisions, adjustable slice decisions, hypotheses, and security constraints in `docs/DESIGN_OPTIONS_AND_CRITICAL_DECISIONS.md`.
 
-## Tomorrow's first move
+## Final specification audit - September 4, 2026
 
-Run the first mechanical test pass against the deterministic cash-protection calculations, record the first bug, and deploy the corrected prototype.
+- Replaced the weekly aggregate with seven editable daily records for gross sales, restocking, transport, other costs, and hours. Fewer than five valid days blocks both routes.
+- Added the Blueprint Condition 4 emergency reserve: the lowest positive net selling day. The protected amount is now the 14-day household floor plus this reserve.
+- Itemized transport, phone/data, documents, equipment or uniform, meals, bank/onboarding/unpaid training, and lost candy income instead of hiding them in a lump sum.
+- Counted all unconfirmed future income or support as MXN 0.
+- Added route source, evidence date, responsible party, requirements, schedule, first-payment/support treatment, and missing-evidence fields.
+- Added select, switch, reject-all, reset-with-confirmation, local JSON export, deterministic summary, and user-approved verification draft controls.
+- Fixed a boundary case so any route shown as `NO DISPONIBLE` is also mechanically disabled.
+- Re-ran 13 deterministic tests, lint, production build, and mobile interaction tests. The final Luis scenario leaves both routes unavailable: formal margin MXN -1,073; education margin MXN -144.
+- Preserved the AI boundary. The Week 4 Blueprint permits AI support but does not make a real LLM mandatory. This build does not claim real-LLM compliance; if the Brightspace rubric separately requires it, submission must stop until a constrained server-side rewrite endpoint is added.
+- External delivery remains blocked until the live site is shared with the instructor, a reachable GitHub repository exists, the narrated MP4 is recorded, and the authentic build conversation is exported.

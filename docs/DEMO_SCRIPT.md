@@ -8,15 +8,15 @@
 
 ## 0:25-1:05 - Protect the base
 
-"PUENTE starts with cash, not a personality or employability score. Luis enters what he has today, the minimum his household needs each week, his net candy income, his selling hours, and the formal salary offered. He can compare seven days or the full 14-day pay cycle."
+"PUENTE starts with cash, not a personality or employability score. Luis records five to seven selling days: sales, restocking, transport, other costs, and hours. PUENTE calculates weekly net income and preserves both the 14-day household floor and the lowest net selling day as an emergency reserve."
 
-**On screen:** Scroll to `MI BASE REAL`. Enter MXN 1,800 cash, MXN 1,200 weekly floor, MXN 1,500 candy income, 42 hours, and MXN 9,500 salary. Point to the MXN 600 gap.
+**On screen:** Show the prefilled invented seven-day log. Point to daily net, MXN 1,795 weekly net, 36 hours, the MXN 205 reserve, and the MXN 2,605 protected total.
 
 ## 1:05-2:05 - Compare without ranking
 
-"The two routes have equal visual weight and no best-route badge. The formal job is evidence-verified, but with these numbers its bridge before payday is negative MXN 893. Evidence alone is not enough, so PUENTE marks the route unavailable and blocks selection. The education-plus-part-time route is provisional because its schedule still needs confirmation, but it preserves 18 selling hours and keeps a positive MXN 36 bridge."
+"The two simulated routes have equal visual weight and no best-route badge. Every card exposes its source, evidence date, responsible party, requirements, schedule, missing evidence, first-payment treatment, transition costs, opportunity cost, and margin above the floor plus reserve. The formal test route is verified and currently safe; the education route is provisional and counts zero unconfirmed support."
 
-**On screen:** Show both cards. Point to transition cost, opportunity cost, pre-paycheck bridge, and the disabled action on Route 1. Select Route 2.
+**On screen:** Open one cost breakdown, compare both cards, select a route, switch routes, and use `RECHAZAR AMBAS RUTAS` to prove reversibility.
 
 ## 2:05-2:45 - One next action and a protected fallback
 
@@ -26,13 +26,13 @@
 
 ## 2:45-3:10 - Explainability and AI boundary
 
-"The arithmetic is deterministic. Simulated AI only explains information in plain Spanish; it cannot verify evidence, score Luis, or change a route status. Inputs stay in the session and can be erased."
+"The arithmetic is deterministic. The clearly labeled simulated output only rewrites the visible result and previews a verification message; it cannot verify evidence, score Luis, send a message, or change a route status. Inputs stay in the session and can be erased or exported locally."
 
 **On screen:** Point to `IA SIMULADA`, `Sin score`, and `Borrar datos`.
 
 ## 3:10-3:30 - Test, fix, outcome
 
-"The persona test exposed a critical contradiction: an earlier version showed a verified route even when the bridge was negative. We changed the decision rule, added a regression test, removed automatic route selection, and redeployed. PUENTE now protects the decision before presenting the opportunity."
+"Testing produced three real fixes. First, retained selling hours could exceed reported hours. Second, a verified route could remain selectable with a negative bridge. Finally, the specification audit exposed a missing emergency reserve and incomplete evidence fields. The final build now passes 13 deterministic tests and protects floor plus reserve before presenting an opportunity."
 
 **On screen:** Show the before and after screenshots from the persona log, then end on the live URL.
 

@@ -36,3 +36,24 @@ Eight engine tests pass, including the new regression test `keeps evidence statu
 ### Tooling note
 
 The deployed version had already passed `npm run build` and `npm run lint`. A documentation-only final rerun on September 3 encountered a local dependency-runtime mismatch in the existing `node_modules`: ESLint reported `shouldUseFlatConfig is not a function`, while a concurrent Vinext build stalled without reporting an application error. No product source changed after the last successful deployment; the deterministic test suite still completed with 8/8 passing.
+
+## Pass 3 - September 4, 2026 specification audit
+
+### Gap found
+
+The Packet promised a 5-7 day sales log, lowest-day reserve, cost-category breakdown, complete route evidence, unconfirmed-income exclusion, inline validation, rejection/export controls, and a labeled generated summary and draft. The interface still used one weekly aggregate and therefore could not prove those acceptance criteria.
+
+### Fix
+
+- Added seven editable daily records and a five-valid-day gate.
+- Added daily net, weekly net, hours, and the lowest positive day as reserve.
+- Changed the protected amount from floor alone to floor plus reserve.
+- Added transition-cost categories and kept opportunity cost visible without deducting it twice.
+- Counted no unconfirmed education-route income.
+- Added source, evidence date, responsible party, requirements, schedule, first-payment/support treatment, and missing evidence to both routes.
+- Added reject-all, confirmed reset, local JSON export, deterministic summary, and message preview controls.
+- Tested the full interaction at 360 px.
+
+### Final automated result
+
+Thirteen engine tests pass. `npm run build` and `npm run lint` both complete successfully after restoring dependencies from the lockfile. The mobile interaction pass confirms that an incomplete log blocks both routes and that route selection and rejection remain reversible.
