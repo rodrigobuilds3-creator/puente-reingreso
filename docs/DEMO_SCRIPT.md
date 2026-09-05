@@ -24,15 +24,15 @@
 
 **On screen:** Show `SIGUIENTE PASO` and the fallback panel.
 
-## 2:45-3:10 - Explainability and AI boundary
+## 2:45-3:10 - Explainability and LLM boundary
 
-"The arithmetic is deterministic. The clearly labeled simulated output only rewrites the visible result and previews a verification message; it cannot verify evidence, score Luis, send a message, or change a route status. Inputs stay in the session and can be erased or exported locally."
+"The arithmetic is deterministic. When I press REESCRIBIR CON LLM, a real server-side language model receives only the calculated numbers and route states and returns a plain-Spanish explanation. It cannot verify evidence, score Luis, recommend a route, send a message, or change any status. The key remains secret and no personal fields are transmitted."
 
-**On screen:** Point to `IA SIMULADA`, `Sin score`, and `Borrar datos`.
+**On screen:** Press `REESCRIBIR CON LLM`, wait for `LLM OUTPUT · GPT-5 MINI`, then point to `Sin score` and `Borrar datos`.
 
 ## 3:10-3:30 - Test, fix, outcome
 
-"Testing produced three real fixes. First, retained selling hours could exceed reported hours. Second, a verified route could remain selectable with a negative bridge. Finally, the specification audit exposed a missing emergency reserve and incomplete evidence fields. The final build now passes 13 deterministic tests and protects floor plus reserve before presenting an opportunity."
+"Testing produced four real fixes. Retained selling hours could exceed reported hours; a verified route could remain selectable with a negative bridge; the specification audit exposed a missing reserve and evidence fields; and the final rubric audit caught that a simulation did not satisfy the LLM requirement. The build now passes 16 tests and keeps the LLM outside the decision core."
 
 **On screen:** Show the before and after screenshots from the persona log, then end on the live URL.
 

@@ -82,6 +82,8 @@ export default function Home() {
   const [inputs, setInputs] = useState<Inputs>(initialInputs);
   const [selected, setSelected] = useState<RouteId | null>(null);
   const [rejected, setRejected] = useState(false);
+  const [llmText, setLlmText] = useState('');
+  const [llmState, setLlmState] = useState<'idle' | 'loading' | 'ready' | 'fallback' | 'error'>('idle');
 
   const calculation = useMemo(() => calculateRouteModel(inputs, period), [inputs, period]);
   const hasInvalidNumber = [inputs.cash, inputs.weeklyFloor, inputs.formalMonthly]
@@ -106,6 +108,8 @@ export default function Home() {
     setInputs((current) => ({ ...current, [key]: value === '' ? 0 : Number(value) }));
     setSelected(null);
     setRejected(false);
+    setLlmText('');
+    setLlmState('idle');
   };
 
   const changeDay = (index: number, key: keyof SellingDay, value: string) => {
@@ -117,6 +121,8 @@ export default function Home() {
     }));
     setSelected(null);
     setRejected(false);
+    setLlmText('');
+    setLlmState('idle');
   };
 
   const reset = () => {
@@ -125,11 +131,15 @@ export default function Home() {
     setPeriod(14);
     setSelected(null);
     setRejected(false);
+    setLlmText('');
+    setLlmState('idle');
   };
 
   const rejectRoutes = () => {
     setSelected(null);
     setRejected(true);
+    setLlmText('');
+    setLlmState('idle');
   };
 
   const exportSummary = () => {
@@ -162,6 +172,39 @@ export default function Home() {
   const selectRoute = (route: RouteId) => {
     setSelected(route);
     setRejected(false);
+    setLlmText('');
+    setLlmState('idle');
+  };
+
+  const requestLlmRewrite = async () => {
+    setLlmState('loading');
+    setLlmText('');
+    try {
+      const response = await fetch('/api/plain-language', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          period,
+          floor: calculation.floor,
+          reserve: calculation.reserve,
+          protectedAmount: calculation.protectedAmount,
+          availableMargin: calculation.availableMargin,
+          selected,
+          rejected,
+          formalStatus,
+          formalBridge: calculation.formal.bridge,
+          prepaStatus,
+          prepaBridge: calculation.prepa.bridge,
+        }),
+      });
+      const data = await response.json() as { text?: string; source?: string; error?: string };
+      if (!response.ok || !data.text) throw new Error(data.error ?? 'No fue posible generar la reescritura.');
+      setLlmText(data.text);
+      setLlmState(data.source === 'openai' ? 'ready' : 'fallback');
+    } catch {
+      setLlmState('error');
+      setLlmText('');
+    }
   };
 
   const goTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -198,8 +241,8 @@ export default function Home() {
           <div className="panel-head">
             <div><p className="dark-eyebrow">MI SEMANA</p><h2>Base protegida</h2></div>
             <div className="period" aria-label="Periodo de cálculo">
-              <button className={period === 7 ? 'active' : ''} onClick={() => { setPeriod(7); setSelected(null); }} type="button">7 DÍAS</button>
-              <button className={period === 14 ? 'active' : ''} onClick={() => { setPeriod(14); setSelected(null); }} type="button">14 DÍAS</button>
+              <button className={period === 7 ? 'active' : ''} onClick={() => { setPeriod(7); setSelected(null); setLlmText(''); setLlmState('idle'); }} type="button">7 DÍAS</button>
+              <button className={period === 14 ? 'active' : ''} onClick={() => { setPeriod(14); setSelected(null); setLlmText(''); setLlmState('idle'); }} type="button">14 DÍAS</button>
             </div>
           </div>
           <div className="metric-grid">
@@ -285,9 +328,11 @@ export default function Home() {
           <button type="button" onClick={exportSummary}>EXPORTAR RESUMEN JSON</button>
         </div>
         <aside className="fallback"><div><span>PLAN B · EN MENOS DE 24 H</span><h3>Volver a venta de dulces por 7 días</h3><p>Si cambia el horario, el pago o la vacante, recuperas tu fuente inmediata y buscas en paralelo por un canal público gratuito.</p></div><b>↘</b></aside>
-        <div className="ai-output">
-          <div><strong>SIMULATED AI OUTPUT</strong><span>No verifica, no puntúa y no cambia el cálculo.</span></div>
-          <p>{aiSummary}</p>
+        <div className="ai-output" aria-live="polite">
+          <div><strong>{llmState === 'ready' ? 'LLM OUTPUT · GPT-5 MINI' : llmState === 'fallback' ? 'FILTRO DE SEGURIDAD · RESUMEN DETERMINISTA' : 'RESUMEN DETERMINISTA'}</strong><span>El LLM sólo reescribe; no verifica, no puntúa y no cambia el cálculo.</span></div>
+          <p>{llmText || aiSummary}</p>
+          <button className="llm-button" type="button" disabled={llmState === 'loading'} onClick={requestLlmRewrite}>{llmState === 'loading' ? 'REESCRIBIENDO…' : 'REESCRIBIR CON LLM'}</button>
+          {llmState === 'error' && <p className="llm-error">El LLM no está disponible. El resumen determinista permanece visible y la decisión no cambia.</p>}
           <label htmlFor="message-draft">Borrador para verificar con una persona responsable</label>
           <textarea id="message-draft" readOnly value="Hola. Antes de decidir, ¿puede confirmar por escrito el horario, los costos, la fecha del primer pago y quién responde por esta información? No autorizo que este mensaje se envíe automáticamente." />
         </div>

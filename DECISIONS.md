@@ -7,8 +7,8 @@
 - Chose an invented 20-year-old candy seller in Ecatepec as the one exact test user.
 - Kept MXN 1,200 per week and MXN 2,400 over 14 days as test assumptions, not population facts.
 - Defined the reserve as the lowest net selling day in the seven-day record.
-- Chose deterministic TypeScript for route decisions and labeled simulated AI for plain-Spanish summaries and message drafts.
-- Chose no persistence, database, auth, or external API for this slice so no personal data is stored or transmitted.
+- Initially chose deterministic TypeScript for route decisions and a labeled simulation for plain-Spanish summaries; the later Brightspace audit superseded only the simulation choice.
+- Chose no persistence, database, or auth for this slice so no personal data is stored.
 - Generated the mockup before code and saved it under `docs/assets/puente-mobile-mockup.png`.
 - Preserved the Open-Future firewall: no best-route label, ranking, destiny score, or AI override.
 
@@ -36,6 +36,14 @@
 - Added route source, evidence date, responsible party, requirements, schedule, first-payment/support treatment, and missing-evidence fields.
 - Added select, switch, reject-all, reset-with-confirmation, local JSON export, deterministic summary, and user-approved verification draft controls.
 - Fixed a boundary case so any route shown as `NO DISPONIBLE` is also mechanically disabled.
-- Re-ran 13 deterministic tests, lint, production build, and mobile interaction tests. The final Luis scenario leaves both routes unavailable: formal margin MXN -1,073; education margin MXN -144.
-- Preserved the AI boundary. The Week 4 Blueprint permits AI support but does not make a real LLM mandatory. This build does not claim real-LLM compliance; if the Brightspace rubric separately requires it, submission must stop until a constrained server-side rewrite endpoint is added.
+- Re-ran 13 deterministic tests, lint, production build, and mobile interaction tests before the later LLM compliance pass. The final Luis scenario leaves both routes unavailable: formal margin MXN -1,073; education margin MXN -144.
+- Initially treated the Blueprint's optional-AI language as sufficient. The later Brightspace audit proved that assumption incomplete and triggered the constrained real-LLM endpoint recorded below.
 - External delivery remains blocked until the live site is shared with the instructor, a reachable GitHub repository exists, the narrated MP4 is recorded, and the authentic build conversation is exported.
+
+## Brightspace correction - September 4, 2026
+
+- Verified the exact Business Bending page after re-authentication. Its stack floor is explicitly **LLM + structured data**; skill assessments may be simulated, but the LLM itself may not.
+- Replaced the simulation-only claim with a real server-side GPT-5 mini rewrite endpoint.
+- Kept every route and cash decision deterministic. The LLM sees only validated numbers, allowed route states, period, and user choice; it cannot score, verify, infer, rank, or recommend.
+- Added `store: false`, a 4 KB request limit, no free-text input, no personal fields, output-length enforcement, and a prohibited-language guard with deterministic fallback.
+- Changed the live site to public access after Rodrigo explicitly authorized it.

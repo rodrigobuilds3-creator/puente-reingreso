@@ -57,3 +57,22 @@ The Packet promised a 5-7 day sales log, lowest-day reserve, cost-category break
 ### Final automated result
 
 Thirteen engine tests pass. `npm run build` and `npm run lint` both complete successfully after restoring dependencies from the lockfile. The mobile interaction pass confirms that an incomplete log blocks both routes and that route selection and rejection remain reversible.
+
+## Pass 4 - September 4, 2026 LLM floor audit
+
+### Gap found
+
+Brightspace explicitly requires `LLM + structured data`. The prior deterministic simulation was labeled honestly but did not satisfy the real-LLM floor, matching the instructor's Week 2 concern.
+
+### Fix
+
+- Added a server-only Responses API endpoint using GPT-5 mini.
+- The endpoint accepts only a closed schema of numbers, route states, period, and user choice; it rejects free text, unexpected labels, oversized bodies, and invalid values.
+- The LLM only rewrites deterministic observations in plain Spanish. It cannot alter route status, cash calculations, or the selected route.
+- The API key remains a hosted secret and never reaches the browser or repository.
+- Requests set `store: false` and contain no name, location, documents, identifiers, or employer messages.
+- A post-generation guard blocks language that scores, labels aptitude, verifies, approves, or recommends a route; the deterministic text remains as fallback.
+
+### Final automated result
+
+Sixteen tests pass, including closed-schema validation, personal-data exclusion, and prohibited-language detection. Lint and the production build pass with the server route classified as `/api/plain-language`.

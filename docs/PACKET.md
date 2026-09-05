@@ -71,9 +71,9 @@ flowchart LR
         U4[Accepts, rejects, exports, or erases]
     end
 
-    subgraph A[Simulated AI assistance]
-        A1[Produces plain-Spanish summary]
-        A2[Drafts a verification question]
+    subgraph A[Constrained LLM]
+        A1[Rewrites deterministic observations in plain Spanish]
+        A2[Cannot change status, score, verify, or recommend]
     end
 
     subgraph S[Deterministic Puente engine]
@@ -113,10 +113,10 @@ In three years, Puente could become a small, accountable network connecting stat
 - No destiny, employability, personality, poverty, or "best route" score.
 - No real personal data, exact home address, CURP, NSS, ID scans, bank information, biometrics, or private employer messages.
 - No database or authentication in this slice because the prototype does not persist personal information; reload clears the session.
-- No production LLM call. The AI summary and draft are deterministic simulations labeled **SIMULATED AI OUTPUT** on screen.
+- No AI scoring, verification, ranking, eligibility inference, route recommendation, or autonomous message sending. The production LLM is limited to rewriting validated deterministic observations in plain Spanish.
 - No claim that the formal job, credential, or institutional handoff is available until its required evidence is confirmed.
 
-**LLM boundary:** the Week 2 feedback about requiring a real LLM does not silently carry into this product as an unsupported claim. Team 6's Week 4 Blueprint says AI *may* support intake, summaries, explanations, and drafts, while deterministic rules and authorized humans must control verification and cash safety. This slice therefore ships a clearly labeled deterministic simulation and makes no claim of satisfying a real-LLM requirement. If the Brightspace rubric separately requires a real LLM, the build must stop and add a constrained server-side rewrite endpoint before submission.
+**LLM boundary:** Brightspace explicitly requires **LLM + structured data**. Puente therefore uses a server-side GPT-5 mini endpoint, but only after the deterministic engine has calculated the result. The endpoint accepts a closed schema containing numbers, allowed route states, period, and user choice; it accepts no free text or personal fields. Its output cannot modify cash, evidence, status, selection, or next steps. A post-generation guard blocks scoring, aptitude, verification, approval, and recommendation language and falls back to deterministic text.
 
 ## 10. Product requirements
 
@@ -129,7 +129,7 @@ In three years, Puente could become a small, accountable network connecting stat
 5. **Route cards:** show up to two equal-weight routes with requirements, schedule, first-payment date, costs, cash after transition, missing evidence, one next action, and responsible institution.
 6. **Protected fallback:** if a route fails the cash floor or required evidence, preserve/restart the candy route for seven days and show one free parallel search action.
 7. **Open-future controls:** allow the user to change priorities, reject every route, reset the session, and see why a route was excluded.
-8. **Simulated AI labels:** display the label beside every generated summary or message draft; unconfirmed AI text cannot change route status.
+8. **Constrained LLM rewrite:** let the user request a clearly labeled plain-language rewrite of deterministic observations; LLM text cannot change route status or any structured field.
 9. **Input safety:** validate types, ranges, maximum lengths, dates, and required fields; render no raw HTML from input.
 10. **Responsive accessibility:** work at 360 px width, preserve readable contrast, use visible focus states, and support keyboard navigation.
 
@@ -144,7 +144,7 @@ In three years, Puente could become a small, accountable network connecting stat
 - Real advisor workflow and institutional verification.
 - Maintained partner-route database with evidence expiry and audit history.
 - Optional authentication and Row Level Security when personal data persistence is introduced.
-- Real LLM-assisted intake with confirmation before structured fields change.
+- Optional LLM-assisted intake only after field-level confirmation, consent, and stronger prompt-injection controls.
 
 ## 11. Acceptance criteria
 
@@ -154,7 +154,8 @@ In three years, Puente could become a small, accountable network connecting stat
 - Given missing or expired employer terms, when calculated, then the route is `PROVISIONAL` and one no-cost verification action is shown.
 - Given projected cash below the protected amount, when calculated, then the route is `UNAVAILABLE`, the gap is shown, and the candy-income fallback activates.
 - Given two routes, when displayed, then neither is called "best" and both receive equal visual weight.
-- Given an AI-style summary or draft, when displayed, then it is labeled `SIMULATED AI OUTPUT` and cannot alter the deterministic result.
+- Given the user requests a plain-language rewrite, when the LLM responds, then it is labeled `LLM OUTPUT · GPT-5 MINI` and cannot alter the deterministic result.
+- Given the LLM emits prohibited scoring, aptitude, verification, approval, or recommendation language, then the output is discarded and the deterministic summary remains visible.
 - Given any text field longer than its limit or any negative/non-numeric money value, when submitted, then an inline validation message appears and no calculation runs.
 - Given the user chooses reset, when confirmed, then all in-session entries disappear.
 
@@ -165,16 +166,17 @@ In three years, Puente could become a small, accountable network connecting stat
 | Interface | Vinext + React + TypeScript + semantic HTML + CSS | Fast, mobile-first, and deployable through OpenAI Sites | Inputs remain in local component state only |
 | Structured data | Local typed JSON fixtures for routes and evidence | Demonstrates maintained data fields without pretending live integrations | Invented records only; explicit evidence dates |
 | Decision core | Pure TypeScript functions | Deterministic, testable cash and status logic | AI cannot override safety or evidence rules |
-| AI floor | Labeled simulated summary and verification draft | Satisfies the allowed simulated-assessment path | No API key or prompt data leaves the browser |
+| LLM rewrite | Server-side OpenAI Responses API using GPT-5 mini | Satisfies the LLM + structured-data floor with one bounded task | Key remains a hosted secret; no free text or personal fields are sent |
 | Testing | Vitest + Playwright or DOM smoke tests | Covers calculations and core interaction | Includes invalid input and reset tests |
-| Hosting | OpenAI Sites / Cloudflare-compatible ESM | Public prototype URL and simple redeploys | No secrets, database, or server logs containing user inputs |
+| Hosting | OpenAI Sites / Cloudflare-compatible ESM | Public prototype URL and server route | API key is stored only as a Sites secret |
 | Persistence | None in V1 | Avoids storing personal data before auth/RLS exist | Refresh clears session; local export is user-triggered |
 
 ## 13. Security floor check
 
-- **Secrets:** none in code or repository; no external API call in V1.
+- **Secrets:** `OPENAI_API_KEY` exists only in the hosted environment; it never enters source, Git history, client JavaScript, or exported files.
 - **Personal data:** invented persona and fixtures only; the UI warns users not to enter CURP, NSS, bank, ID, exact address, or real employer messages.
-- **Authentication/RLS:** not applicable because no data is persisted or transmitted. They become P0 before any personal-data storage exists.
+- **LLM data minimization:** the request contains only validated numeric observations, allowed route states, period, and route choice; `store: false` is set.
+- **Authentication/RLS:** not applicable because no personal data is persisted. They become P0 before any personal-data storage exists.
 - **Validation:** all fields have type, range, date, and length validation; outputs use text rendering rather than raw HTML.
 - **External messages:** the user previews and copies a draft; Puente never sends it.
 
@@ -202,11 +204,11 @@ Walk the persona through screenshots in order. Log every confusion in `docs/PERS
 
 For this prototype, success is task completion and correct safety behavior, not employment placement. Record whether the synthetic user can identify the protected amount, understand each status, explain why a route failed, and identify the next action without assistance.
 
-Stop or revise if the engine produces a preventable cash-floor breach, hides a missing requirement, labels an unconfirmed route verified, visually privileges one route, loses alternatives after changing priorities, or allows simulated AI output to change the decision core. At pilot scale, also stop for critical data errors, unequal completion, no handoff improvement, no staff-time reduction, or measured value below ten times full operating cost, as required by the Team 6 Blueprint.
+Stop or revise if the engine produces a preventable cash-floor breach, hides a missing requirement, labels an unconfirmed route verified, visually privileges one route, loses alternatives after changing priorities, or allows LLM output to change the decision core. At pilot scale, also stop for critical data errors, unequal completion, no handoff improvement, no staff-time reduction, or measured value below ten times full operating cost, as required by the Team 6 Blueprint.
 
 ## 16. Implementation prompt for the coding agent
 
-Build a small mobile-first Vite + TypeScript web app named Puente from this packet. Implement the cash-protection engine as pure functions first, then the seven-day log, two equal-weight route cards, evidence statuses, simulated-AI summary, and protected fallback. Use only invented fixtures and no persistence or network calls. Each result must expose its math and missing evidence. Add automated tests for the three route states and invalid inputs, then document one bug-fix-redeploy cycle. Do not add a marketplace, scoring, authentication, a database, real LLM API, or personal-data fields.
+Build a small mobile-first Vite + TypeScript web app named Puente from this packet. Implement the cash-protection engine as pure functions first, then the seven-day log, two equal-weight route cards, evidence statuses, and protected fallback. Add one server-side LLM endpoint that accepts only closed structured observations and rewrites them in plain Spanish; it must never score, verify, rank, infer eligibility, recommend a route, or modify structured state. Use only invented fixtures and no persistence. Add automated tests for route states, invalid inputs, the LLM schema, and prohibited language, then document the test-fix-redeploy cycle.
 
 <!-- pagebreak -->
 
@@ -239,5 +241,5 @@ The first deployed interface did not fully match this Packet. It used weekly agg
 - Each route displays its simulated source, evidence date, requirements, schedule, first-payment/support treatment, missing evidence, and responsible party.
 - The provisional education route counts MXN 0 of unconfirmed future income.
 - The user can select, switch, reject all routes, reset after confirmation, and export a local JSON summary.
-- Every generated explanation and draft appears inside one `SIMULATED AI OUTPUT` block and cannot change route status.
-- Thirteen automated tests, a successful production build, lint, and a 360 px interaction pass validate the final source.
+- A server-side GPT-5 mini endpoint now rewrites only validated deterministic observations, with `store: false`, no free text, no personal fields, and a prohibited-language fallback.
+- Sixteen automated tests, a successful production build, lint, and a 360 px interaction pass validate the final source.

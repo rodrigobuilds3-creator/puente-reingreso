@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { calculateRouteModel, calculateSellingLog, type CashInputs, type SellingDay } from '../lib/engine.ts';
+import { deterministicObservation, parseRewriteObservation, rewriteViolatesBoundary } from '../lib/llm.ts';
 
 const days: SellingDay[] = [
   { gross: 320, restock: 80, transport: 20, other: 0, hours: 5 },
@@ -92,4 +93,36 @@ test('keeps evidence status conceptually separate from cash safety', () => {
   const lowCash = calculateRouteModel({ ...base, cash: 500 }, 14);
   assert.equal(lowCash.formal.safetyStatus, 'unavailable');
   assert.equal(lowCash.prepa.safetyStatus, 'unavailable');
+});
+
+const rewriteFixture = {
+  period: 14 as const,
+  floor: 2400,
+  reserve: 180,
+  protectedAmount: 2580,
+  availableMargin: -780,
+  selected: null,
+  rejected: false,
+  formalStatus: 'NO DISPONIBLE' as const,
+  formalBridge: -1073,
+  prepaStatus: 'NO DISPONIBLE' as const,
+  prepaBridge: -144,
+};
+
+test('accepts only a closed structured observation for the LLM', () => {
+  assert.deepEqual(parseRewriteObservation(rewriteFixture), rewriteFixture);
+  assert.equal(parseRewriteObservation({ ...rewriteFixture, formalStatus: 'ERES INESTABLE' }), null);
+  assert.equal(parseRewriteObservation({ ...rewriteFixture, protectedAmount: '2580' }), null);
+});
+
+test('builds the LLM input from deterministic facts without personal data', () => {
+  const text = deterministicObservation(rewriteFixture);
+  assert.match(text, /MXN 2580/);
+  assert.match(text, /NO DISPONIBLE/);
+  assert.doesNotMatch(text, /Luis|Ecatepec|CURP|NSS/);
+});
+
+test('blocks LLM language that scores or recommends a route', () => {
+  assert.equal(rewriteViolatesBoundary('Te recomiendo elegir la mejor ruta.'), true);
+  assert.equal(rewriteViolatesBoundary('El total protegido es MXN 2,580.'), false);
 });

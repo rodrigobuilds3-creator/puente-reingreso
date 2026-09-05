@@ -114,7 +114,7 @@ Build a **B+A hybrid**: use Option B's legible ledger and transparent arithmetic
 |---|---|---|---|---|
 | A1 | TEAM | AI may assist intake, summaries, explanations, and drafts; deterministic rules and authorized humans verify eligibility, cash safety, institutional decisions, and handoffs. | Prevents persuasive text from becoming an official decision. | Team-level architecture. |
 | A2 | SLICE | The Week 4 build uses a deterministic TypeScript calculator plus structured JSON route fixtures. | Makes the safety result inspectable and testable. | Technology can change if logic remains deterministic and visible. |
-| A3 | SLICE | AI output is simulated in V1 and visibly labeled `SIMULATED AI OUTPUT`. | Meets the allowed stack floor without exposing an API key or personal data. | A real LLM can be added later with consent and confirmation. |
+| A3 | SLICE | A server-side GPT-5 mini endpoint rewrites only validated deterministic observations. The browser never receives the API key, the request contains no free text or personal fields, and a post-generation guard rejects scoring or recommendation language. | Satisfies Brightspace's explicit LLM + structured-data floor without allowing generated prose to control safety. | Model can change; the closed schema and safety boundary cannot. |
 | A4 | SECURITY | Only user-confirmed facts enter the decision core. AI interpretation remains editable and cannot set a negative trait or route status. | Prevents inference from becoming identity. | Should not be weakened. |
 | A5 | SECURITY | AI cannot infer employability, personality, rejection cause, ability, or potential from writing, device, neighborhood, family status, or time away. | These are unsafe proxy judgments. | Should not be weakened. |
 
@@ -158,7 +158,7 @@ Build a **B+A hybrid**: use Option B's legible ledger and transparent arithmetic
 7. **Routes:** formal employment plus high-school/skills advancement, or another second horizon.
 8. **Formality gate:** approve payroll + IMSS confirmation and the five-business-day bounded exception.
 9. **Fallback:** approve returning to candy sales within 24 hours before using the public-employment fallback.
-10. **Prototype architecture:** approve no persistence and simulated AI for Week 4.
+10. **Prototype architecture:** approve no persistence and a constrained server-side LLM that only rewrites deterministic observations.
 
 ## Image-generation record
 
