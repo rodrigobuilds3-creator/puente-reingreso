@@ -76,3 +76,7 @@ Brightspace explicitly requires `LLM + structured data`. The prior deterministic
 ### Final automated result
 
 Sixteen tests pass, including closed-schema validation, personal-data exclusion, and prohibited-language detection. Lint and the production build pass with the server route classified as `/api/plain-language`.
+
+### Live-provider result
+
+The Sites secret is configured and the deployed route reaches the provider. The final live request returned `insufficient_quota`, and the client showed the safe deterministic fallback. This proves the failure path and secret isolation, but it is not presented as evidence of a successful LLM generation. Successful live-output evidence remains pending the professor's clarification or minimal provider credit.

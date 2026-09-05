@@ -6,7 +6,7 @@
 **Blueprint condition owned:** Condition 4 - every route protects immediate stability by accounting for income timing, transport, equipment, schedule, first-payment dates, and an emergency reserve.
 
 **Working prototype:** https://puente-reingreso-rodrigo.j6x567qt8g.chatgpt.site
-**Build evidence:** thirteen deterministic engine tests pass; three Sites versions were published before the final compliance rebuild; the mechanical, persona, and specification-audit fixes are documented and retested.
+**Build evidence:** sixteen deterministic and LLM-boundary tests pass; six Sites versions were published through the final compliance rebuild; the mechanical, persona, specification-audit, and LLM-boundary fixes are documented and retested.
 
 ## 1. Problem in my words
 
@@ -117,6 +117,8 @@ In three years, Puente could become a small, accountable network connecting stat
 - No claim that the formal job, credential, or institutional handoff is available until its required evidence is confirmed.
 
 **LLM boundary:** Brightspace explicitly requires **LLM + structured data**. Puente therefore uses a server-side GPT-5 mini endpoint, but only after the deterministic engine has calculated the result. The endpoint accepts a closed schema containing numbers, allowed route states, period, and user choice; it accepts no free text or personal fields. Its output cannot modify cash, evidence, status, selection, or next steps. A post-generation guard blocks scoring, aptitude, verification, approval, and recommendation language and falls back to deterministic text.
+
+**Deployment status at audit:** the server-side endpoint and secret are deployed, but the provider currently returns `insufficient_quota`. This is represented honestly in the interface through the protected deterministic fallback. A successful generated rewrite remains pending either minimal provider credit or written confirmation from the professor that a simulated and labeled LLM slice is acceptable.
 
 ## 10. Product requirements
 
@@ -243,3 +245,4 @@ The first deployed interface did not fully match this Packet. It used weekly agg
 - The user can select, switch, reject all routes, reset after confirmation, and export a local JSON summary.
 - A server-side GPT-5 mini endpoint now rewrites only validated deterministic observations, with `store: false`, no free text, no personal fields, and a prohibited-language fallback.
 - Sixteen automated tests, a successful production build, lint, and a 360 px interaction pass validate the final source.
+- The hosted secret is configured; the final live audit reached the provider but received `insufficient_quota`, so no successful generated output is claimed.
