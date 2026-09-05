@@ -47,7 +47,15 @@ export async function POST(request: Request) {
   });
 
   if (!response.ok) {
-    return Response.json({ error: 'El servicio de lenguaje no respondió.' }, { status: 502, headers });
+    const providerError = await response.json().catch(() => ({})) as {
+      error?: { code?: unknown; type?: unknown };
+    };
+    return Response.json({
+      error: 'El servicio de lenguaje no respondió.',
+      providerStatus: response.status,
+      providerCode: typeof providerError.error?.code === 'string' ? providerError.error.code : 'unknown',
+      providerType: typeof providerError.error?.type === 'string' ? providerError.error.type : 'unknown',
+    }, { status: 502, headers });
   }
 
   const data = await response.json() as { output_text?: unknown };
