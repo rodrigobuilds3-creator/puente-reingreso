@@ -14,7 +14,7 @@
 
 ## Blocking before submission
 
-- **LLM live proof / professor clarification:** `OPENAI_API_KEY` is stored as a Sites secret and the constrained endpoint is deployed. The provider currently returns `insufficient_quota`, so the interface safely keeps the deterministic explanation instead of displaying a real generated rewrite. Capture one successful live rewrite if the professor confirms that a live LLM call is mandatory.
+- **LLM live proof:** the professor confirmed that the interaction must be real. The endpoint now prioritizes Groq's free-compatible API with model `openai/gpt-oss-20b`; `GROQ_API_KEY` must be stored as a Sites secret and one successful rewrite must be captured. The deterministic fallback remains only for provider failure or prohibited output.
 - **DEMO:** `DEMO_Rodrigo_Pena_de_Leon.mp4` does not exist yet.
 - **BUILDCHAT:** `BUILDCHAT_Rodrigo_Pena_de_Leon.pdf` does not exist yet and must be exported from the authentic conversation.
 - **Future Bending:** the separate reflection-video deliverable is not present in the Week 4 folder.
@@ -23,7 +23,7 @@
 
 - Record the narrated walkthrough and export it as `DEMO_Rodrigo_Pena_de_Leon.mp4`. The exact script is in `DEMO_SCRIPT.md`.
 - Export this build conversation as `BUILDCHAT_Rodrigo_Pena_de_Leon.pdf`. It must remain the real conversation rather than a reconstructed transcript.
-- Share the professor's answer about whether the Week 4 LLM must complete a live provider call. If yes, add minimal API credit and capture one successful bounded rewrite; if simulated behavior is explicitly accepted, retain the clearly labeled deterministic fallback.
+- Create a free Groq API key, store it in Sites as `GROQ_API_KEY`, and capture one successful bounded rewrite from the deployed button.
 
 ## Final upload set
 
@@ -34,4 +34,4 @@
 5. `PERSONA_Rodrigo_Pena_de_Leon.pdf`.
 6. `BUILDCHAT_Rodrigo_Pena_de_Leon.pdf`.
 
-**Current verdict:** do not submit yet. The live site and GitHub repository are public, the hosted secret is configured, and the constrained LLM architecture is deployed. Remaining blockers are the professor-dependent live LLM proof and the required media/transcript files.
+**Current verdict:** do not submit yet. The live site and GitHub repository are public, and the constrained Groq architecture is implemented and build-validated. Remaining blockers are the `GROQ_API_KEY`, one successful live rewrite, and the required media/transcript files.

@@ -17,6 +17,6 @@ npm run dev
 
 The final audit passes 16 deterministic and LLM-boundary tests, lint, production build, and a 360 px interaction pass.
 
-All data is invented and nothing is persisted. A server-side GPT-5 mini endpoint receives only closed numeric observations and route states, then rewrites them in plain Spanish. Deterministic rules alone control cash safety and route status; the LLM cannot score, verify, rank, infer eligibility, or recommend a route.
+All data is invented and nothing is persisted. A server-side Groq endpoint using `openai/gpt-oss-20b` receives only closed numeric observations and route states, then rewrites them in plain Spanish. Deterministic rules alone control cash safety and route status; the LLM cannot score, verify, rank, infer eligibility, or recommend a route.
 
-Deployment note: the endpoint and hosted secret are configured, but the provider currently reports exhausted API quota. The product therefore displays its deterministic fallback; no successful live LLM output is claimed until quota is available or the instructor confirms that a labeled simulation satisfies the Week 4 floor.
+Deployment note: the hosted environment must contain `GROQ_API_KEY` as a secret. OpenAI remains a compatibility fallback, but its previous key exhausted its quota.

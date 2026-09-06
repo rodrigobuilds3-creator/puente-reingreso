@@ -84,6 +84,7 @@ export default function Home() {
   const [rejected, setRejected] = useState(false);
   const [llmText, setLlmText] = useState('');
   const [llmState, setLlmState] = useState<'idle' | 'loading' | 'ready' | 'fallback' | 'error'>('idle');
+  const [llmProvider, setLlmProvider] = useState('');
 
   const calculation = useMemo(() => calculateRouteModel(inputs, period), [inputs, period]);
   const hasInvalidNumber = [inputs.cash, inputs.weeklyFloor, inputs.formalMonthly]
@@ -110,6 +111,7 @@ export default function Home() {
     setRejected(false);
     setLlmText('');
     setLlmState('idle');
+    setLlmProvider('');
   };
 
   const changeDay = (index: number, key: keyof SellingDay, value: string) => {
@@ -123,6 +125,7 @@ export default function Home() {
     setRejected(false);
     setLlmText('');
     setLlmState('idle');
+    setLlmProvider('');
   };
 
   const reset = () => {
@@ -133,6 +136,7 @@ export default function Home() {
     setRejected(false);
     setLlmText('');
     setLlmState('idle');
+    setLlmProvider('');
   };
 
   const rejectRoutes = () => {
@@ -140,6 +144,7 @@ export default function Home() {
     setRejected(true);
     setLlmText('');
     setLlmState('idle');
+    setLlmProvider('');
   };
 
   const exportSummary = () => {
@@ -174,6 +179,7 @@ export default function Home() {
     setRejected(false);
     setLlmText('');
     setLlmState('idle');
+    setLlmProvider('');
   };
 
   const requestLlmRewrite = async () => {
@@ -200,7 +206,8 @@ export default function Home() {
       const data = await response.json() as { text?: string; source?: string; error?: string };
       if (!response.ok || !data.text) throw new Error(data.error ?? 'No fue posible generar la reescritura.');
       setLlmText(data.text);
-      setLlmState(data.source === 'openai' ? 'ready' : 'fallback');
+      setLlmState(data.source === 'groq' || data.source === 'openai' ? 'ready' : 'fallback');
+      setLlmProvider(data.source === 'groq' ? 'GROQ · GPT-OSS-20B' : 'OPENAI · GPT-5 MINI');
     } catch {
       setLlmState('error');
       setLlmText('');
@@ -329,7 +336,7 @@ export default function Home() {
         </div>
         <aside className="fallback"><div><span>PLAN B · EN MENOS DE 24 H</span><h3>Volver a venta de dulces por 7 días</h3><p>Si cambia el horario, el pago o la vacante, recuperas tu fuente inmediata y buscas en paralelo por un canal público gratuito.</p></div><b>↘</b></aside>
         <div className="ai-output" aria-live="polite">
-          <div><strong>{llmState === 'ready' ? 'LLM OUTPUT · GPT-5 MINI' : llmState === 'fallback' ? 'FILTRO DE SEGURIDAD · RESUMEN DETERMINISTA' : 'RESUMEN DETERMINISTA'}</strong><span>El LLM sólo reescribe; no verifica, no puntúa y no cambia el cálculo.</span></div>
+          <div><strong>{llmState === 'ready' ? `LLM OUTPUT · ${llmProvider}` : llmState === 'fallback' ? 'FILTRO DE SEGURIDAD · RESUMEN DETERMINISTA' : 'RESUMEN DETERMINISTA'}</strong><span>El LLM sólo reescribe; no verifica, no puntúa y no cambia el cálculo.</span></div>
           <p>{llmText || aiSummary}</p>
           <button className="llm-button" type="button" disabled={llmState === 'loading'} onClick={requestLlmRewrite}>{llmState === 'loading' ? 'REESCRIBIENDO…' : 'REESCRIBIR CON LLM'}</button>
           {llmState === 'error' && <p className="llm-error">El LLM no está disponible. El resumen determinista permanece visible y la decisión no cambia.</p>}

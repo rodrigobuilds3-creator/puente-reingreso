@@ -116,9 +116,9 @@ In three years, Puente could become a small, accountable network connecting stat
 - No AI scoring, verification, ranking, eligibility inference, route recommendation, or autonomous message sending. The production LLM is limited to rewriting validated deterministic observations in plain Spanish.
 - No claim that the formal job, credential, or institutional handoff is available until its required evidence is confirmed.
 
-**LLM boundary:** Brightspace explicitly requires **LLM + structured data**. Puente therefore uses a server-side GPT-5 mini endpoint, but only after the deterministic engine has calculated the result. The endpoint accepts a closed schema containing numbers, allowed route states, period, and user choice; it accepts no free text or personal fields. Its output cannot modify cash, evidence, status, selection, or next steps. A post-generation guard blocks scoring, aptitude, verification, approval, and recommendation language and falls back to deterministic text.
+**LLM boundary:** Brightspace explicitly requires **LLM + structured data**. Puente therefore uses a server-side Groq endpoint with `openai/gpt-oss-20b`, but only after the deterministic engine has calculated the result. The endpoint accepts a closed schema containing numbers, allowed route states, period, and user choice; it accepts no free text or personal fields. Its output cannot modify cash, evidence, status, selection, or next steps. A post-generation guard blocks scoring, aptitude, verification, approval, and recommendation language and falls back to deterministic text.
 
-**Deployment status at audit:** the server-side endpoint and secret are deployed, but the provider currently returns `insufficient_quota`. This is represented honestly in the interface through the protected deterministic fallback. A successful generated rewrite remains pending either minimal provider credit or written confirmation from the professor that a simulated and labeled LLM slice is acceptable.
+**Deployment status at audit:** the professor confirmed that a real model call is mandatory and that a free API tier is acceptable. The endpoint now prioritizes Groq, with `GROQ_API_KEY` kept as a Sites secret. A successful generated rewrite must be captured before submission; deterministic fallback is retained only for provider failure or prohibited output.
 
 ## 10. Product requirements
 
@@ -156,7 +156,7 @@ In three years, Puente could become a small, accountable network connecting stat
 - Given missing or expired employer terms, when calculated, then the route is `PROVISIONAL` and one no-cost verification action is shown.
 - Given projected cash below the protected amount, when calculated, then the route is `UNAVAILABLE`, the gap is shown, and the candy-income fallback activates.
 - Given two routes, when displayed, then neither is called "best" and both receive equal visual weight.
-- Given the user requests a plain-language rewrite, when the LLM responds, then it is labeled `LLM OUTPUT · GPT-5 MINI` and cannot alter the deterministic result.
+- Given the user requests a plain-language rewrite, when the LLM responds, then it is labeled `LLM OUTPUT · GROQ · GPT-OSS-20B` and cannot alter the deterministic result.
 - Given the LLM emits prohibited scoring, aptitude, verification, approval, or recommendation language, then the output is discarded and the deterministic summary remains visible.
 - Given any text field longer than its limit or any negative/non-numeric money value, when submitted, then an inline validation message appears and no calculation runs.
 - Given the user chooses reset, when confirmed, then all in-session entries disappear.
@@ -168,14 +168,14 @@ In three years, Puente could become a small, accountable network connecting stat
 | Interface | Vinext + React + TypeScript + semantic HTML + CSS | Fast, mobile-first, and deployable through OpenAI Sites | Inputs remain in local component state only |
 | Structured data | Local typed JSON fixtures for routes and evidence | Demonstrates maintained data fields without pretending live integrations | Invented records only; explicit evidence dates |
 | Decision core | Pure TypeScript functions | Deterministic, testable cash and status logic | AI cannot override safety or evidence rules |
-| LLM rewrite | Server-side OpenAI Responses API using GPT-5 mini | Satisfies the LLM + structured-data floor with one bounded task | Key remains a hosted secret; no free text or personal fields are sent |
+| LLM rewrite | Server-side Groq OpenAI-compatible Chat Completions API using `openai/gpt-oss-20b` | Satisfies the LLM + structured-data floor on the professor-approved free tier | `GROQ_API_KEY` remains a hosted secret; no free text or personal fields are sent |
 | Testing | Vitest + Playwright or DOM smoke tests | Covers calculations and core interaction | Includes invalid input and reset tests |
 | Hosting | OpenAI Sites / Cloudflare-compatible ESM | Public prototype URL and server route | API key is stored only as a Sites secret |
 | Persistence | None in V1 | Avoids storing personal data before auth/RLS exist | Refresh clears session; local export is user-triggered |
 
 ## 13. Security floor check
 
-- **Secrets:** `OPENAI_API_KEY` exists only in the hosted environment; it never enters source, Git history, client JavaScript, or exported files.
+- **Secrets:** `GROQ_API_KEY` exists only in the hosted environment; it never enters source, Git history, client JavaScript, or exported files.
 - **Personal data:** invented persona and fixtures only; the UI warns users not to enter CURP, NSS, bank, ID, exact address, or real employer messages.
 - **LLM data minimization:** the request contains only validated numeric observations, allowed route states, period, and route choice; `store: false` is set.
 - **Authentication/RLS:** not applicable because no personal data is persisted. They become P0 before any personal-data storage exists.
@@ -243,6 +243,6 @@ The first deployed interface did not fully match this Packet. It used weekly agg
 - Each route displays its simulated source, evidence date, requirements, schedule, first-payment/support treatment, missing evidence, and responsible party.
 - The provisional education route counts MXN 0 of unconfirmed future income.
 - The user can select, switch, reject all routes, reset after confirmation, and export a local JSON summary.
-- A server-side GPT-5 mini endpoint now rewrites only validated deterministic observations, with `store: false`, no free text, no personal fields, and a prohibited-language fallback.
+- A server-side Groq `openai/gpt-oss-20b` endpoint now rewrites only validated deterministic observations, with no free text, no personal fields, and a prohibited-language fallback.
 - Sixteen automated tests, a successful production build, lint, and a 360 px interaction pass validate the final source.
-- The hosted secret is configured; the final live audit reached the provider but received `insufficient_quota`, so no successful generated output is claimed.
+- The prior OpenAI hosted key returned `insufficient_quota`; the final correction moved the live provider to the professor-approved free Groq tier. A successful Groq rewrite remains required evidence before submission.

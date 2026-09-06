@@ -79,4 +79,4 @@ Sixteen tests pass, including closed-schema validation, personal-data exclusion,
 
 ### Live-provider result
 
-The Sites secret is configured and the deployed route reaches the provider. The final live request returned `insufficient_quota`, and the client showed the safe deterministic fallback. This proves the failure path and secret isolation, but it is not presented as evidence of a successful LLM generation. Successful live-output evidence remains pending the professor's clarification or minimal provider credit.
+The professor confirmed that a real model call is mandatory. The endpoint now prioritizes Groq's free-compatible OpenAI API with `openai/gpt-oss-20b`; `GROQ_API_KEY` is server-only. A successful deployed rewrite must be captured before submission. The prior OpenAI `insufficient_quota` response remains documented as the tested failure path, not as live-output evidence.
