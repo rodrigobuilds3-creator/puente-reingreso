@@ -6,25 +6,25 @@
 
 **On screen:** Show the PUENTE landing screen and the phrase `TU DINERO PRIMERO`.
 
-## 0:25-1:05 - Protect the base
+## 0:25-1:00 - Protect the base
 
 "PUENTE starts with cash, not a personality or employability score. Luis records five to seven selling days: sales, restocking, transport, other costs, and hours. PUENTE calculates weekly net income and preserves both the 14-day household floor and the lowest net selling day as an emergency reserve."
 
 **On screen:** Show the prefilled invented seven-day log. Point to daily net, MXN 1,795 weekly net, 36 hours, the MXN 205 reserve, and the MXN 2,605 protected total.
 
-## 1:05-2:05 - Compare without ranking
+## 1:00-1:50 - Compare without ranking
 
 "The two simulated routes have equal visual weight and no best-route badge. Every card exposes its source, evidence date, responsible party, requirements, schedule, missing evidence, first-payment treatment, transition costs, opportunity cost, and margin above the floor plus reserve. The formal test route is verified and currently safe; the education route is provisional and counts zero unconfirmed support."
 
 **On screen:** Open one cost breakdown, compare both cards, select a route, switch routes, and use `RECHAZAR AMBAS RUTAS` to prove reversibility.
 
-## 2:05-2:45 - One next action and a protected fallback
+## 1:50-2:20 - One next action and a protected fallback
 
 "After Luis chooses, PUENTE gives one sequence: validate the school schedule, confirm that the option is free, retain candy-selling hours, and review the route on day 14. If a schedule, vacancy, or payment changes, the fallback restores seven days of candy sales in less than 24 hours."
 
 **On screen:** Show `SIGUIENTE PASO` and the fallback panel.
 
-## 2:45-3:10 - Explainability and LLM boundary
+## 2:20-3:00 - Explainability and LLM boundary
 
 "The arithmetic is deterministic. When I press REESCRIBIR CON LLM, a real server-side Groq model receives only the calculated numbers and route states and returns a plain-Spanish explanation. It cannot verify evidence, score Luis, recommend a route, send a message, or change any status. The key remains secret and no personal fields are transmitted."
 
