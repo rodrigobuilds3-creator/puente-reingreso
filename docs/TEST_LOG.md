@@ -79,4 +79,4 @@ Sixteen tests pass, including closed-schema validation, personal-data exclusion,
 
 ### Live-provider result
 
-The professor confirmed that a real model call is mandatory. The endpoint now prioritizes Groq's free-compatible OpenAI API with `openai/gpt-oss-20b`; `GROQ_API_KEY` is server-only. A successful deployed rewrite must be captured before submission. The prior OpenAI `insufficient_quota` response remains documented as the tested failure path, not as live-output evidence.
+The professor confirmed that a real model call is mandatory. The endpoint now prioritizes Groq's free-compatible OpenAI API with `openai/gpt-oss-20b`; `GROQ_API_KEY` is server-only. After adding `reasoning_effort: low`, `reasoning_format: hidden`, and a sufficient completion budget, the deployed endpoint returned `source: groq` and generated Spanish text. The prior OpenAI `insufficient_quota` response remains documented as the tested failure path, not as live-output evidence.

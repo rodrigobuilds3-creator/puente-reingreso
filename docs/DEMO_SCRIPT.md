@@ -28,7 +28,7 @@
 
 "The arithmetic is deterministic. When I press REESCRIBIR CON LLM, a real server-side Groq model receives only the calculated numbers and route states and returns a plain-Spanish explanation. It cannot verify evidence, score Luis, recommend a route, send a message, or change any status. The key remains secret and no personal fields are transmitted."
 
-**On screen:** Press `REESCRIBIR CON LLM`, wait for `LLM OUTPUT · GROQ · GPT-OSS-20B`, then point to `Sin score` and `Borrar datos`.
+**On screen:** Press `REESCRIBIR CON LLM`, wait for `LLM OUTPUT · GROQ · GPT-OSS-20B`, then point to `Sin score` and `Borrar datos`. The successful live call was verified on September 6, 2026.
 
 ## 3:10-3:30 - Test, fix, outcome
 

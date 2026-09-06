@@ -118,7 +118,7 @@ In three years, Puente could become a small, accountable network connecting stat
 
 **LLM boundary:** Brightspace explicitly requires **LLM + structured data**. Puente therefore uses a server-side Groq endpoint with `openai/gpt-oss-20b`, but only after the deterministic engine has calculated the result. The endpoint accepts a closed schema containing numbers, allowed route states, period, and user choice; it accepts no free text or personal fields. Its output cannot modify cash, evidence, status, selection, or next steps. A post-generation guard blocks scoring, aptitude, verification, approval, and recommendation language and falls back to deterministic text.
 
-**Deployment status at audit:** the professor confirmed that a real model call is mandatory and that a free API tier is acceptable. The endpoint now prioritizes Groq, with `GROQ_API_KEY` kept as a Sites secret. A successful generated rewrite must be captured before submission; deterministic fallback is retained only for provider failure or prohibited output.
+**Deployment status at audit:** the professor confirmed that a real model call is mandatory and that a free API tier is acceptable. The endpoint now prioritizes Groq, with `GROQ_API_KEY` kept as a Sites secret. A public POST on September 6, 2026 returned `source: groq` from `openai/gpt-oss-20b` and a generated Spanish rewrite; deterministic fallback is retained only for provider failure or prohibited output.
 
 ## 10. Product requirements
 
@@ -246,3 +246,4 @@ The first deployed interface did not fully match this Packet. It used weekly agg
 - A server-side Groq `openai/gpt-oss-20b` endpoint now rewrites only validated deterministic observations, with no free text, no personal fields, and a prohibited-language fallback.
 - Sixteen automated tests, a successful production build, lint, and a 360 px interaction pass validate the final source.
 - The prior OpenAI hosted key returned `insufficient_quota`; the final correction moved the live provider to the professor-approved free Groq tier. A successful Groq rewrite remains required evidence before submission.
+- A public live test on September 6, 2026 returned a generated Groq rewrite with no personal fields and no change to the deterministic result.

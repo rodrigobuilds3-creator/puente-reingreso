@@ -14,7 +14,7 @@
 
 ## Blocking before submission
 
-- **LLM live proof:** the professor confirmed that the interaction must be real. The endpoint now prioritizes Groq's free-compatible API with model `openai/gpt-oss-20b`; `GROQ_API_KEY` must be stored as a Sites secret and one successful rewrite must be captured. The deterministic fallback remains only for provider failure or prohibited output.
+- **LLM live proof:** complete. The professor confirmed that the interaction must be real. The deployed endpoint used Groq's free-compatible API with model `openai/gpt-oss-20b`; `GROQ_API_KEY` remains a Sites secret. A public POST returned `source: groq` with generated Spanish text. The deterministic fallback remains only for provider failure or prohibited output.
 - **DEMO:** `DEMO_Rodrigo_Pena_de_Leon.mp4` does not exist yet.
 - **BUILDCHAT:** `BUILDCHAT_Rodrigo_Pena_de_Leon.pdf` does not exist yet and must be exported from the authentic conversation.
 - **Future Bending:** the separate reflection-video deliverable is not present in the Week 4 folder.
@@ -23,7 +23,7 @@
 
 - Record the narrated walkthrough and export it as `DEMO_Rodrigo_Pena_de_Leon.mp4`. The exact script is in `DEMO_SCRIPT.md`.
 - Export this build conversation as `BUILDCHAT_Rodrigo_Pena_de_Leon.pdf`. It must remain the real conversation rather than a reconstructed transcript.
-- Create a free Groq API key, store it in Sites as `GROQ_API_KEY`, and capture one successful bounded rewrite from the deployed button.
+- Keep the Groq key private; the bounded rewrite has already been captured from the deployed endpoint.
 
 ## Final upload set
 
@@ -34,4 +34,4 @@
 5. `PERSONA_Rodrigo_Pena_de_Leon.pdf`.
 6. `BUILDCHAT_Rodrigo_Pena_de_Leon.pdf`.
 
-**Current verdict:** do not submit yet. The live site and GitHub repository are public, and the constrained Groq architecture is implemented and build-validated. Remaining blockers are the `GROQ_API_KEY`, one successful live rewrite, and the required media/transcript files.
+**Current verdict:** the Business Bending implementation is ready except for the demo MP4 and authentic Build Chat PDF. The live site, GitHub repository, constrained Groq architecture, secret isolation, and successful real LLM rewrite are complete.
