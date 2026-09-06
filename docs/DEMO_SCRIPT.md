@@ -30,11 +30,11 @@
 
 **On screen:** Press `REESCRIBIR CON LLM`, wait for `LLM OUTPUT · GROQ · GPT-OSS-20B`, then point to `Sin score` and `Borrar datos`. The successful live call was verified on September 6, 2026.
 
-## 3:10-3:30 - Test, fix, outcome
+## 3:00-3:30 - What changed my mind this week
 
-"Testing produced four real fixes. Retained selling hours could exceed reported hours; a verified route could remain selectable with a negative bridge; the specification audit exposed a missing reserve and evidence fields; and the final rubric audit caught that a simulation did not satisfy the LLM requirement. The build now passes 16 tests and keeps the LLM outside the decision core."
+"What changed my mind this week was testing the product as Luis instead of defending the first design. I found that a verified-looking route could still leave the household short before payday, so I changed the rule, added the emergency reserve, removed automatic selection, and kept the candy-selling fallback visible. I also learned that the explanation layer had to make a real LLM call while leaving the decision core deterministic. The final build passes 16 tests and keeps that boundary explicit."
 
-**On screen:** Show the before and after screenshots from the persona log, then end on the live URL.
+**On screen:** Show the before/after persona screenshots, point to the corrected `NO DISPONIBLE` state and protected fallback, then end on the live URL.
 
 ## Recording checklist
 
@@ -42,5 +42,5 @@
 - Keep the cursor slow and visible; do not rush the arithmetic.
 - Use invented data only.
 - Show the live URL at the beginning and end.
-- Target 3:15-3:45 total duration.
+- Target exactly 3:00 of walkthrough plus 0:30 of reflection: 3:30 total.
 - Export as `DEMO_Rodrigo_Pena_de_Leon.mp4`.

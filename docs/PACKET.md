@@ -6,7 +6,7 @@
 **Blueprint condition owned:** Condition 4 - every route protects immediate stability by accounting for income timing, transport, equipment, schedule, first-payment dates, and an emergency reserve.
 
 **Working prototype:** https://puente-reingreso-rodrigo.j6x567qt8g.chatgpt.site
-**Build evidence:** sixteen deterministic and LLM-boundary tests pass; six Sites versions were published through the final compliance rebuild; the mechanical, persona, specification-audit, and LLM-boundary fixes are documented and retested.
+**Build evidence:** sixteen deterministic and LLM-boundary tests pass; ten Sites versions were published through the final compliance rebuild; the mechanical, persona, specification-audit, and LLM-boundary fixes are documented and retested.
 
 ## 1. Problem in my words
 

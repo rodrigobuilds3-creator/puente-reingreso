@@ -43,7 +43,7 @@
 ## Brightspace correction - September 4, 2026
 
 - Verified the exact Business Bending page after re-authentication. Its stack floor is explicitly **LLM + structured data**; skill assessments may be simulated, but the LLM itself may not.
-- Replaced the simulation-only claim with a real server-side GPT-5 mini rewrite endpoint.
+- Replaced the simulation-only claim with a real server-side constrained LLM rewrite endpoint.
 - Kept every route and cash decision deterministic. The LLM sees only validated numbers, allowed route states, period, and user choice; it cannot score, verify, infer, rank, or recommend. After instructor clarification, the provider was switched to the free Groq-compatible API using `openai/gpt-oss-20b`; `GROQ_API_KEY` remains server-side.
 - Added `store: false`, a 4 KB request limit, no free-text input, no personal fields, output-length enforcement, and a prohibited-language guard with deterministic fallback.
 - Changed the live site to public access after Rodrigo explicitly authorized it.
