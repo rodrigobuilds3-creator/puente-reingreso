@@ -48,19 +48,19 @@ export async function POST(request: Request) {
         ? {
             model: 'openai/gpt-oss-20b',
             temperature: 0.1,
-            max_tokens: 180,
-            messages: [
-              {
-                role: 'system',
-                content: [
-                  'Reescribe únicamente los hechos deterministas recibidos en español sencillo para una persona que lee despacio.',
-                  'Máximo 70 palabras. No agregues hechos, no hagas inferencias y no menciones rasgos personales.',
-                  'Nunca puntúes, verifiques, clasifiques ni recomiendes aprobar, rechazar o elegir una ruta.',
-                  'Explica los montos y estados; la decisión sigue perteneciendo a la persona.',
-                ].join(' '),
-              },
-              { role: 'user', content: deterministicText },
-            ],
+            reasoning_effort: 'low',
+            reasoning_format: 'hidden',
+            max_completion_tokens: 512,
+            messages: [{
+              role: 'user',
+              content: [
+                'Reescribe únicamente los hechos deterministas siguientes en español sencillo para una persona que lee despacio.',
+                'Máximo 70 palabras. No agregues hechos, no hagas inferencias y no menciones rasgos personales.',
+                'Nunca puntúes, verifiques, clasifiques ni recomiendes aprobar, rechazar o elegir una ruta.',
+                'Explica los montos y estados; la decisión sigue perteneciendo a la persona.',
+                `Hechos: ${deterministicText}`,
+              ].join(' '),
+            }],
           }
         : {
             model: 'gpt-5-mini',
