@@ -1,8 +1,8 @@
 # PUENTE - Demo and reflection scripts
 
-## What to submit for Business Bending
+## Qué entregar en Business Bending
 
-Brightspace asks for a 3 minute 30 second demo. The final 30 seconds must answer: **what changed my mind this week?** Use the demo script below as the required recording. The separate two-minute reflection is included only in case the course opens a different Future Bending activity.
+Brightspace pide una demo de 3 minutos 30 segundos. Los últimos 30 segundos deben responder: **what changed my mind this week?** Usa el guion de demo como grabación requerida. La reflexión de dos minutos solo sirve si el curso abre otra actividad de Future Bending.
 
 ## Script 1 - Live demo, 3:30 total
 
@@ -10,70 +10,70 @@ Brightspace asks for a 3 minute 30 second demo. The final 30 seconds must answer
 
 **Say:**
 
-"Luis is 20, lives in Ecatepec, left high school to help at home, and sells candy near a Mexibus route. A formal job may pay MXN 9,500 per month, but that number hides the dangerous part: transport and transition costs begin today while the first paycheck may arrive in 14 days. PUENTE answers whether Luis can cross that gap without leaving his household short."
+"Luis is 20, lives in Ecatepec, and sells candy after leaving school to help at home. A formal job can pay MXN 9,500 monthly, but transport and transition costs start before the first paycheck. PUENTE checks whether he can cross that gap safely."
 
-**On screen:** Open the live URL and keep the browser address visible for two seconds. Show the PUENTE landing screen and the phrase `TU DINERO PRIMERO`. Do not change the prefilled invented scenario.
+**En pantalla:** Abre la URL en vivo. Muestra la dirección y la pantalla inicial durante dos segundos. Señala `TU DINERO PRIMERO`. No cambies los datos inventados.
 
 ### 0:25-1:00 - Protect the base
 
 **Say:**
 
-"PUENTE starts with cash, not a personality or employability score. Luis records five to seven selling days: sales, restocking, transport, other costs, and hours. PUENTE calculates weekly net income and preserves both the 14-day household floor and the lowest net selling day as an emergency reserve."
+"PUENTE starts with cash, not a personality score. Luis records sales, restocking, transport, other costs, and hours for seven days. The app calculates net income, protects the 14-day household floor, and reserves his lowest net day."
 
-**On screen:** Click `CALCULAR MI BASE` or scroll to `MI BASE`. Confirm `14 DIAS` is active. Show the seven-day log and point to `7/7` valid days, MXN 1,795 weekly net, 36 hours, MXN 205 reserve, and MXN 2,605 total protected. Do not edit the values.
+**En pantalla:** Pulsa `CALCULAR MI BASE` y confirma `14 DIAS`. Muestra 7/7 días válidos, MXN 1,795 netos, 36 horas, MXN 205 de reserva y MXN 2,605 protegidos. No edites los datos.
 
 ### 1:00-1:50 - Compare without ranking
 
 **Say:**
 
-"The two simulated routes have equal visual weight and no best-route badge. Every card exposes its source, evidence date, responsible party, requirements, schedule, missing evidence, first-payment treatment, transition costs, opportunity cost, and margin above the floor plus reserve. The formal test route is verified and currently safe; the education route is provisional and counts zero unconfirmed support."
+"Both simulated routes have equal weight; neither is called best. Each card shows evidence, schedule, first payment, transition costs, opportunity cost, and bridge margin. The formal route is verified for this test; the education route stays provisional because support is unconfirmed."
 
-**On screen:** Scroll to `RUTAS`. Open `VER DESGLOSE DE COSTOS` on one card. Point to the evidence fields, transition costs, opportunity cost, and bridge margin. Click `EXPLORAR ESTA RUTA` once, then click the other route to show that the user can switch. Do not call either route the best one.
+**En pantalla:** Ve a `RUTAS`. Abre `VER DESGLOSE DE COSTOS` y señala evidencia, costos y margen. Pulsa `EXPLORAR ESTA RUTA` y después cambia a la otra. No llames mejor a ninguna.
 
 ### 1:50-2:20 - One next action and a protected fallback
 
 **Say:**
 
-"After Luis chooses, PUENTE gives one sequence: validate the school schedule, confirm that the option is free, retain candy-selling hours, and review the route on day 14. If a schedule, vacancy, or payment changes, the fallback restores seven days of candy sales in less than 24 hours."
+"After a choice, PUENTE gives one sequence: confirm the schedule, confirm the option is free, preserve selling hours, and review on day 14. If terms change, the fallback restores seven days of candy sales."
 
-**On screen:** Scroll to `SIGUIENTE PASO`. Click `RECHAZAR AMBAS RUTAS`. Show that the alternative remains visible and point to `PLAN B - EN MENOS DE 24 H` and `Volver a venta de dulces por 7 días`.
+**En pantalla:** Ve a `SIGUIENTE PASO`. Pulsa `RECHAZAR AMBAS RUTAS`. Muestra `PLAN B - EN MENOS DE 24 H` y `Volver a venta de dulces por 7 días`.
 
 ### 2:20-3:00 - Explainability and the real LLM boundary
 
 **Say:**
 
-"The arithmetic is deterministic. When I press REESCRIBIR CON LLM, a real server-side Groq model receives only the calculated numbers and route states and returns a plain-Spanish explanation. It cannot verify evidence, score Luis, recommend a route, send a message, or change any status. The key remains secret and no personal fields are transmitted."
+"The arithmetic and decision are deterministic. REESCRIBIR CON LLM sends only structured numbers and route states to a real server-side Groq model for a plain-Spanish rewrite. It cannot verify, score, recommend, send, or change a status. The key stays server-side."
 
-**On screen:** Scroll to the AI panel and click `REESCRIBIR CON LLM`. Wait for `LLM OUTPUT - GROQ - GPT-OSS-20B`. Point to the explanation, the line that says the LLM does not verify or score, and the `Borrar datos` control. If the panel shows the protected deterministic fallback instead of Groq, do not record that take; retry later when the real provider response appears.
+**En pantalla:** Ve al panel de IA y pulsa `REESCRIBIR CON LLM`. Espera `LLM OUTPUT - GROQ - GPT-OSS-20B`. Señala la explicación, el aviso de límites y `Borrar datos`. Si aparece el fallback, repite la toma después.
 
 ### 3:00-3:30 - What changed my mind this week
 
 **Say:**
 
-"What changed my mind this week was testing the product as Luis instead of defending the first design. I found that a verified-looking route could still leave the household short before payday, so I changed the rule, added the emergency reserve, removed automatic selection, and kept the candy-selling fallback visible. I also learned that the explanation layer had to make a real LLM call while leaving the decision core deterministic. The final build passes 16 tests and keeps that boundary explicit."
+"What changed my mind this week was testing as Luis. A verified-looking route could still leave the household short before payday, so I changed the rule, added the emergency reserve, removed automatic selection, and kept the fallback visible. I also learned the LLM must explain, not decide. The final build passes 16 tests."
 
-**On screen:** Show the before and after persona screenshots, point to the corrected `NO DISPONIBLE` state and protected fallback, then end on the live URL.
+**En pantalla:** Muestra el antes y después de la prueba de persona. Señala `NO DISPONIBLE` y el fallback protegido. Termina mostrando la URL en vivo.
 
-## Recording checklist
+## Lista de grabación
 
-- Use a 360-430 px mobile-width browser window.
-- Keep the cursor slow and visible.
-- Use only the invented Luis data.
-- Show the live URL at the beginning and end.
-- Do not expose environment variables, API keys, real names, or personal data.
-- Record exactly 3:00 of walkthrough plus 0:30 of reflection.
-- Export as `DEMO_Rodrigo_Pena_de_Leon.mp4`.
+- Usa una ventana de 360-430 px.
+- Mueve el cursor lentamente.
+- Usa solo los datos inventados de Luis.
+- Muestra la URL en vivo al inicio y al final.
+- No expongas variables de entorno, claves API, nombres reales ni datos personales.
+- Graba 3:00 de recorrido y 0:30 de reflexión.
+- Exporta como `DEMO_Rodrigo_Pena_de_Leon.mp4`.
 
 ## Script 2 - Optional two-minute Future Bending reflection
 
-Use this only if a separate Future Bending activity asks for an individual reflection. For the Business Bending Dropbox, the required reflection is the final 30 seconds above.
+Úsalo solo si otra actividad de Future Bending pide una reflexión individual. Para Business Bending, la reflexión requerida son los últimos 30 segundos de arriba.
 
-**0:00-0:20:** "I am Rodrigo Pena de Leon, Team 6, working from the User role. I focused on the unstable informal-work vacuum: a 20-year-old in Ecatepec who sells packaged candy and cannot safely move into formal work if the first paycheck arrives after the household's cash runs out."
+**0:00-0:20:** "I am Rodrigo Pena de Leon, Team 6, working from the User role. I focused on unstable informal work: a 20-year-old in Ecatepec who sells candy and cannot move safely into formal work if the first paycheck arrives after the household's cash runs out."
 
-**0:20-0:55:** "I initially considered a proof-of-skill product, but the Team 6 Blueprint made the immediate constraint clearer: the scarce resource is not only direction; it is the ability to cross a transition without losing today's income. That led me to Puente, a re-entry navigator that starts with cash, not a personality or employability score."
+**0:20-0:55:** "I first considered a proof-of-skill product, but the Blueprint clarified the immediate constraint: the scarce resource is the ability to cross a transition without losing today's income. That led to Puente, a re-entry navigator that starts with cash, not an employability score."
 
-**0:55-1:25:** "The most important learning came from testing. An early version could show a route as verified even when the bridge before the first paycheck was negative. That was a safety failure, not a copy problem. I changed the deterministic rule, added the lowest-day reserve, removed automatic route selection, and preserved a seven-day fallback through candy sales."
+**0:55-1:25:** "Testing showed that a verified-looking route could still leave the household short before payday. That was a safety failure. I changed the rule, added the lowest-day reserve, removed automatic route selection, and preserved a seven-day fallback through candy sales."
 
-**1:25-1:50:** "The calculations, validation, evidence states, and route decision remain deterministic. The required LLM interaction is a constrained server-side Groq call that receives only structured observations and rewrites them in plain Spanish. It cannot score, verify, recommend approval, or change the result."
+**1:25-1:50:** "The calculations, validation, evidence states, and route decision remain deterministic. The required LLM interaction is a constrained server-side Groq call that rewrites structured observations in plain Spanish. It cannot score, verify, recommend approval, or change the result."
 
-**1:50-2:00:** "The next responsible step is to test the language and cash assumptions with real participants using consent, then validate route evidence with an actual institution. If Puente ever stores personal information, authentication, retention controls, and Row Level Security must come before expansion."
+**1:50-2:00:** "The next step is to test the language and cash assumptions with real participants using consent, then validate route evidence with an institution. If Puente stores personal information, authentication, retention controls, and Row Level Security come before expansion."
